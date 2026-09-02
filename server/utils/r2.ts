@@ -8,3 +8,7 @@ export function requireR2Bucket(env: Cloudflare.Env): R2Bucket {
 
   return env.R2
 }
+
+export function hasR2Bucket(env: Cloudflare.Env): boolean {
+  return !!env.R2
+}

@@ -5,7 +5,7 @@ const slugValidator = SlugSchema
 
 defineRouteMeta({
   openAPI: {
-    description: 'Upload an image to R2 storage',
+    description: 'Upload an image for social preview (stored in R2 or KV)',
     requestBody: {
       required: true,
       content: {
@@ -25,7 +25,7 @@ defineRouteMeta({
 })
 
 export default eventHandler(async (event) => {
-  const R2 = requireR2Bucket(event.context.cloudflare.env)
+  const env = event.context.cloudflare.env
 
   const formData = await readFormData(event)
   const file = formData.get('file') as File | null
@@ -56,11 +56,25 @@ export default eventHandler(async (event) => {
   const key = `images/${slug}/${nanoid(10)()}.${ext}`
 
   const arrayBuffer = await file.arrayBuffer()
-  await R2.put(key, arrayBuffer, {
-    httpMetadata: {
-      contentType: file.type,
-    },
-  })
+  if (env.R2) {
+    await env.R2.put(key, arrayBuffer, {
+      httpMetadata: {
+        contentType: file.type,
+      },
+    })
+  }
+  else if (env.KV) {
+    const etag = `"${crypto.randomUUID()}"`
+    await env.KV.put(key, arrayBuffer, {
+      metadata: {
+        contentType: file.type,
+        etag,
+      },
+    })
+  }
+  else {
+    throw createError({ status: 503, statusText: 'Storage binding not configured' })
+  }
 
   const imageUrl = `/_assets/${key}`
   return { url: imageUrl, key }

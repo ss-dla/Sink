@@ -1,6 +1,6 @@
 defineRouteMeta({
   openAPI: {
-    description: 'Manually trigger a backup to R2',
+    description: 'Manually trigger a backup (saved to R2 or KV)',
     security: [{ bearerAuth: [] }],
   },
 })
@@ -11,7 +11,7 @@ export default eventHandler(async (event) => {
   if (!result.completed && result.reason === 'migration-incomplete')
     throw createError({ status: 423, statusText: 'Link migration is required' })
   if (!result.completed)
-    requireR2Bucket(env)
+    throw createError({ status: 503, statusText: 'Storage not configured for backup' })
 
   return {
     success: true,

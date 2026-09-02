@@ -3,7 +3,7 @@
 // Runtime types generated with workerd@1.20260708.1 2025-05-08 nodejs_compat
 interface __BaseEnv_Env {
 	KV: KVNamespace;
-	R2: R2Bucket;
+	R2?: R2Bucket;
 	DB: D1Database;
 	ANALYTICS: AnalyticsEngineDataset;
 	AI: Ai;

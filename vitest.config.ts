@@ -35,6 +35,7 @@ export default defineConfig(async ({ mode }) => ({
       },
       miniflare: {
         cf: true,
+        r2Buckets: ['R2'],
         bindings: {
           TEST_MIGRATIONS: await readD1Migrations('./drizzle'),
         },
