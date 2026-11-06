@@ -41,10 +41,11 @@ export async function backupLinksToR2(env: Cloudflare.Env, isManual: boolean = f
   const prefix = isManual ? 'manual-links-' : 'links-'
   const filename = `backups/${prefix}${timestamp}.json`
 
-  if (env.R2) {
+  const r2 = env.R2
+  if (r2) {
     const backup = createBackupJsonStream(iterateAllAuthoritativeLinks(env), backupMetadata)
     const stagingKey = `${filename}.pending-${crypto.randomUUID()}`
-    const upload = await env.R2.createMultipartUpload(stagingKey, {
+    const upload = await r2.createMultipartUpload(stagingKey, {
       httpMetadata: { contentType: 'application/json' },
     })
     let count: number
@@ -55,10 +56,10 @@ export async function backupLinksToR2(env: Cloudflare.Env, isManual: boolean = f
       await upload.complete(parts)
       uploadCompleted = true
 
-      const staged = await env.R2.get(stagingKey)
+      const staged = await r2.get(stagingKey)
       if (!staged)
         throw new Error('Staged backup object is missing')
-      await env.R2.put(filename, staged.body, {
+      await r2.put(filename, staged.body, {
         httpMetadata: { contentType: 'application/json' },
         customMetadata: {
           count: String(count),
@@ -69,10 +70,10 @@ export async function backupLinksToR2(env: Cloudflare.Env, isManual: boolean = f
     catch (error) {
       if (!uploadCompleted)
         await runCleanup('abort multipart upload', () => upload.abort())
-      await runCleanup('delete staging object', () => env.R2.delete(stagingKey))
+      await runCleanup('delete staging object', () => r2.delete(stagingKey))
       throw error
     }
-    await runCleanup('delete staging object', () => env.R2.delete(stagingKey))
+    await runCleanup('delete staging object', () => r2.delete(stagingKey))
 
     console.info(`[backup] Backup completed to R2: ${filename}, ${count} links`)
     return { completed: true, filename, count, storage: 'r2' }
