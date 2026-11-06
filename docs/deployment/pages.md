@@ -24,7 +24,7 @@ If a deploy starts before you finish bindings and variables, open the deployment
 
 Create the Cloudflare resources you need, then open the Pages project → **Settings → Bindings** and add them. Binding = connect a resource to Sink under a fixed name.
 
-| Binding name | Product          | Required?   | What it is                |
+| Binding name | Product          | Required?   | Description               |
 | ------------ | ---------------- | ----------- | ------------------------- |
 | `DB`         | D1               | Yes         | Stores links              |
 | `KV`         | KV               | Yes         | Speeds up redirects       |
@@ -61,11 +61,11 @@ Also configure Pages Build / Wrangler authentication for the Production environm
 
 Add runtime configuration separately in the same dashboard section:
 
-| Runtime variable     | Type             | What to put                                                           |
-| -------------------- | ---------------- | --------------------------------------------------------------------- |
-| `NUXT_SITE_TOKEN`    | Encrypted secret | Dashboard login password and API password (strong, stable, ≥ 8 chars) |
-| `NUXT_CF_ACCOUNT_ID` | Variable         | Cloudflare account ID (for analytics)                                 |
-| `NUXT_CF_API_TOKEN`  | Encrypted secret | Custom Token with **Account → Account Analytics → Read** only         |
+| Runtime variable     | Type             | What to put                                                                          |
+| -------------------- | ---------------- | ------------------------------------------------------------------------------------ |
+| `NUXT_SITE_TOKEN`    | Encrypted secret | Dashboard login password and API password (strong, stable, ≥ 8 chars, no whitespace) |
+| `NUXT_CF_ACCOUNT_ID` | Variable         | Cloudflare account ID (for analytics)                                                |
+| `NUXT_CF_API_TOKEN`  | Encrypted secret | Custom Token with **Account → Account Analytics → Read** only                        |
 
 How to create the analytics token: Cloudflare dashboard → profile icon → **My Profile** → **API Tokens** → **Create Token** → **Custom Token** → permission **Account → Account Analytics → Read**.
 
