@@ -24,7 +24,7 @@ description: 通过 Git 集成和仪表盘管理的绑定将 Sink 部署到 Clou
 
 创建需要的 Cloudflare 资源，然后打开 Pages 项目 → **Settings → Bindings** 添加。绑定 = 把资源用固定名称接到 Sink。
 
-| 绑定名称    | 产品             | 是否必需 | 是什么         |
+| 绑定名称    | 产品             | 是否必需 | 说明           |
 | ----------- | ---------------- | -------- | -------------- |
 | `DB`        | D1               | 必需     | 保存链接       |
 | `KV`        | KV               | 必需     | 加速跳转       |
@@ -61,11 +61,11 @@ description: 通过 Git 集成和仪表盘管理的绑定将 Sink 部署到 Clou
 
 在仪表盘的同一位置另行添加运行时配置：
 
-| 运行时变量           | 类型     | 填什么                                                      |
-| -------------------- | -------- | ----------------------------------------------------------- |
-| `NUXT_SITE_TOKEN`    | 加密密钥 | 仪表盘登录密码和 API 密码（高强度、稳定，至少 8 个字符）    |
-| `NUXT_CF_ACCOUNT_ID` | 变量     | Cloudflare 账户 ID（访问分析用）                            |
-| `NUXT_CF_API_TOKEN`  | 加密密钥 | 仅含 **Account → Account Analytics → Read** 的 Custom Token |
+| 运行时变量           | 类型     | 填什么                                                                 |
+| -------------------- | -------- | ---------------------------------------------------------------------- |
+| `NUXT_SITE_TOKEN`    | 加密密钥 | 仪表盘登录密码和 API 密码（高强度、稳定，至少 8 个字符且不含空白字符） |
+| `NUXT_CF_ACCOUNT_ID` | 变量     | Cloudflare 账户 ID（访问分析用）                                       |
+| `NUXT_CF_API_TOKEN`  | 加密密钥 | 仅含 **Account → Account Analytics → Read** 的 Custom Token            |
 
 创建访问分析令牌：Cloudflare 仪表盘 → 右上角头像 → **My Profile** → **API Tokens** → **Create Token** → **Custom Token** → 权限选 **Account → Account Analytics → Read**。
 
