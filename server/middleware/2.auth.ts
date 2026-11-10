@@ -1,7 +1,7 @@
 import { timingSafeEqual } from 'node:crypto'
 
 export default eventHandler(async (event) => {
-  if (!event.path.startsWith('/api/'))
+  if (!event.path.startsWith('/api/') || event.path.startsWith('/api/auth/'))
     return
 
   const token = getHeader(event, 'Authorization')?.replace(/^Bearer\s+/, '')
@@ -9,6 +9,29 @@ export default eventHandler(async (event) => {
     event.context.authMethod = 'site-token'
     event.context.userID = 'root'
     event.context.userEmail = `root@${getRequestURL(event).hostname}`
+    event.context.userRole = 'admin'
+    return
+  }
+
+  const sessionUser = await getSessionUser(event)
+  if (sessionUser) {
+    const requestURL = getRequestURL(event)
+    if (!isSameOriginMutationSafe({
+      method: event.method,
+      origin: getHeader(event, 'Origin'),
+      requestOrigin: requestURL.origin,
+      secFetchSite: getHeader(event, 'Sec-Fetch-Site'),
+    })) {
+      throw createError({
+        status: 403,
+        statusText: 'Forbidden',
+      })
+    }
+
+    event.context.authMethod = 'google-session'
+    event.context.userID = sessionUser.email
+    event.context.userEmail = sessionUser.email
+    event.context.userRole = sessionUser.role
     return
   }
 

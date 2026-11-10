@@ -5,6 +5,15 @@ import { z } from 'zod'
 const { t } = useI18n()
 const { previewMode } = useRuntimeConfig().public
 
+const route = useRoute()
+const { data: providers } = useFetch<{ google: boolean }>('/api/auth/providers', { server: false })
+const googleError = computed(() => {
+  const code = route.query.error
+  return typeof code === 'string' && ['google_disabled', 'google_failed', 'invalid_state', 'not_registered'].includes(code)
+    ? t(`login.error_${code}`)
+    : ''
+})
+
 const token = shallowRef('')
 const error = shallowRef('')
 const submitError = shallowRef('')
@@ -52,6 +61,18 @@ async function handleSubmit() {
 </script>
 
 <template>
+  <div v-if="providers?.google" class="space-y-4">
+    <Alert v-if="googleError" variant="destructive" role="alert">
+      <AlertCircle aria-hidden="true" class="size-4" />
+      <AlertTitle>{{ googleError }}</AlertTitle>
+    </Alert>
+    <Button as="a" href="/api/auth/google/login" class="w-full">
+      {{ $t('login.google_button') }}
+    </Button>
+    <p class="text-center text-sm text-muted-foreground">
+      {{ $t('login.or') }}
+    </p>
+  </div>
   <form class="space-y-6" :aria-busy="isSubmitting" @submit.prevent="handleSubmit">
     <Input
       type="text"
