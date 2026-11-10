@@ -1,5 +1,7 @@
 import type { VerifyResponse } from '@/types'
 
+const ADMIN_PAGES = ['/dashboard/migrate', '/dashboard/users', '/dashboard/audit']
+
 export default defineNuxtRouteMiddleware(async (to) => {
   if (import.meta.server)
     return
@@ -15,6 +17,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
     if (to.path === '/dashboard/login')
       return navigateTo('/dashboard')
+
+    if (ADMIN_PAGES.some(page => to.path.startsWith(page)) && response.userRole !== 'admin')
+      return navigateTo('/dashboard/links')
   }
   catch {
     clearAuthSession()

@@ -29,7 +29,9 @@
     "analysis": "分析",
     "realtime": "实时",
     "check": "检测",
-    "migrate": "导入/导出"
+    "migrate": "导入/导出",
+    "users": "Users",
+    "audit": "Audit log"
   },
   "sidebar": {
     "subtitle": "短链接服务",
@@ -42,5 +44,57 @@
     "releases": "版本发布",
     "stars": "Stars",
     "update": "新版本 {version} 可用（当前: {current}）"
+  },
+  "users": {
+    "title": "Users",
+    "email_label": "Google email",
+    "email_placeholder": "name{'@'}datalabs.id",
+    "role_label": "Role",
+    "role_admin": "Admin",
+    "role_editor": "Editor",
+    "add": "Add user",
+    "add_success": "User added",
+    "add_failed": "Failed to add user",
+    "exists": "This user is already registered",
+    "update_failed": "Failed to update user",
+    "self_change": "You cannot demote or disable yourself",
+    "load_failed": "Failed to load users",
+    "status_active": "Active",
+    "status_disabled": "Disabled",
+    "disable": "Disable",
+    "enable": "Enable",
+    "empty": "No users yet",
+    "columns": {
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "added": "Added by",
+      "actions": "Actions"
+    }
+  },
+  "audit": {
+    "title": "Audit log",
+    "filter_slug": "Slug",
+    "filter_actor": "Actor email",
+    "apply": "Apply",
+    "load_more": "Load more",
+    "load_failed": "Failed to load audit log",
+    "empty": "No entries",
+    "columns": {
+      "time": "Time",
+      "actor": "Actor",
+      "action": "Action",
+      "target": "Slug",
+      "detail": "Detail"
+    },
+    "actions": {
+      "link_create": "Created link",
+      "link_edit": "Edited link",
+      "link_delete": "Deleted link",
+      "link_import": "Imported links",
+      "user_add": "Added user",
+      "user_update": "Updated user",
+      "auth_login": "Logged in"
+    }
   }
 }

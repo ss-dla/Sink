@@ -8,6 +8,7 @@ interface NavItem {
 
 const { title } = useAppConfig()
 const { isActive } = useDashboardRoute()
+const { userRole } = useAuthSession()
 
 const platformItems = computed<NavItem[]>(() => [
   {
@@ -36,14 +37,28 @@ const platformItems = computed<NavItem[]>(() => [
   },
 ])
 
-const settingsItems = computed<NavItem[]>(() => [
-  {
-    title: 'nav.migrate',
-    url: '/dashboard/migrate',
-    icon: DASHBOARD_ROUTES.migrate.icon,
-    isActive: isActive('migrate'),
-  },
-])
+const settingsItems = computed<NavItem[]>(() => userRole.value !== 'admin'
+  ? []
+  : [
+      {
+        title: 'nav.migrate',
+        url: '/dashboard/migrate',
+        icon: DASHBOARD_ROUTES.migrate.icon,
+        isActive: isActive('migrate'),
+      },
+      {
+        title: 'nav.users',
+        url: '/dashboard/users',
+        icon: DASHBOARD_ROUTES.users.icon,
+        isActive: isActive('users'),
+      },
+      {
+        title: 'nav.audit',
+        url: '/dashboard/audit',
+        icon: DASHBOARD_ROUTES.audit.icon,
+        isActive: isActive('audit'),
+      },
+    ])
 </script>
 
 <template>

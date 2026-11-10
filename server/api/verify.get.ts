@@ -42,6 +42,7 @@ export default eventHandler((event) => {
     authMethod,
     userID,
     userEmail,
+    userRole: getUserRole(event) ?? 'editor',
     accessEnabled: isCloudflareAccessConfigured(cfAccessTeamDomain, cfAccessAud),
   }
 })
