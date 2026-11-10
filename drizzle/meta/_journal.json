@@ -57,6 +57,13 @@
       "when": 1794278220756,
       "tag": "0007_demonic_unicorn",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1794278501951,
+      "tag": "0008_nervous_warhawk",
+      "breakpoints": true
     }
   ]
 }

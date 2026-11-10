@@ -29,7 +29,9 @@
     "analysis": "Analisis",
     "realtime": "Real-time",
     "check": "Check",
-    "migrate": "Impor/Ekspor"
+    "migrate": "Impor/Ekspor",
+    "users": "Pengguna",
+    "audit": "Log audit"
   },
   "sidebar": {
     "subtitle": "Pemendek Tautan",
@@ -42,5 +44,57 @@
     "releases": "Rilis",
     "stars": "Bintang",
     "update": "Versi baru {version} tersedia (saat ini: {current})"
+  },
+  "users": {
+    "title": "Pengguna",
+    "email_label": "Email Google",
+    "email_placeholder": "nama{'@'}datalabs.id",
+    "role_label": "Peran",
+    "role_admin": "Admin",
+    "role_editor": "Editor",
+    "add": "Tambah pengguna",
+    "add_success": "Pengguna ditambahkan",
+    "add_failed": "Gagal menambahkan pengguna",
+    "exists": "Pengguna ini sudah terdaftar",
+    "update_failed": "Gagal memperbarui pengguna",
+    "self_change": "Kamu tidak bisa menurunkan atau menonaktifkan dirimu sendiri",
+    "load_failed": "Gagal memuat pengguna",
+    "status_active": "Aktif",
+    "status_disabled": "Nonaktif",
+    "disable": "Nonaktifkan",
+    "enable": "Aktifkan",
+    "empty": "Belum ada pengguna",
+    "columns": {
+      "email": "Email",
+      "role": "Peran",
+      "status": "Status",
+      "added": "Ditambahkan oleh",
+      "actions": "Aksi"
+    }
+  },
+  "audit": {
+    "title": "Log audit",
+    "filter_slug": "Slug",
+    "filter_actor": "Email pelaku",
+    "apply": "Terapkan",
+    "load_more": "Muat lebih banyak",
+    "load_failed": "Gagal memuat log audit",
+    "empty": "Tidak ada entri",
+    "columns": {
+      "time": "Waktu",
+      "actor": "Pelaku",
+      "action": "Aksi",
+      "target": "Slug",
+      "detail": "Detail"
+    },
+    "actions": {
+      "link_create": "Membuat link",
+      "link_edit": "Mengedit link",
+      "link_delete": "Menghapus link",
+      "link_import": "Mengimpor link",
+      "user_add": "Menambah pengguna",
+      "user_update": "Memperbarui pengguna",
+      "auth_login": "Login"
+    }
   }
 }
