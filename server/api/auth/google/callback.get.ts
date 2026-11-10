@@ -48,6 +48,8 @@ export default eventHandler(async (event) => {
   if (!user)
     return fail('not_registered')
 
+  await recordAudit(event, 'auth.login', null, undefined, { email: user.email, role: user.role })
+
   setCookie(event, SESSION_COOKIE, await createSessionValue(user.email, config.sessionSecret), {
     httpOnly: true,
     secure: url.protocol === 'https:',

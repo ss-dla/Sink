@@ -92,6 +92,9 @@ export default eventHandler(async (event) => {
     }
   }
 
+  if (result.success > 0 || result.failed > 0)
+    await recordAudit(event, 'link.import', null, { success: result.success, skipped: result.skipped, failed: result.failed })
+
   setResponseHeader(event, 'Cache-Control', 'no-store')
 
   return result

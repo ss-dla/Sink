@@ -80,3 +80,16 @@ export const linkOwners = sqliteTable('link_owners', {
   owner: text().notNull(),
   createdAt: integer('created_at').notNull(),
 })
+
+export const linkAudit = sqliteTable('link_audit', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  at: integer().notNull(),
+  actorEmail: text('actor_email').notNull(),
+  actorRole: text('actor_role').notNull(),
+  action: text().notNull(),
+  slug: text(),
+  detail: text(),
+}, table => [
+  index('link_audit_slug_id_idx').on(table.slug, table.id),
+  index('link_audit_actor_email_id_idx').on(table.actorEmail, table.id),
+])

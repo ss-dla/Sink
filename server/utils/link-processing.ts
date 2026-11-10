@@ -97,6 +97,7 @@ export async function saveNewLink(event: H3Event, link: Link): Promise<LinkRespo
     throw createError({ status: 409, statusText: 'Link already exists' })
 
   await recordLinkOwner(event, link.slug)
+  await recordAudit(event, 'link.create', link.slug, { after: auditLink(link) })
   return buildLinkResponse(event, link)
 }
 
@@ -110,6 +111,7 @@ export async function upsertLink(event: H3Event, link: Link): Promise<LinkRespon
   await hashNewLinkPassword(link)
   if (await createLink(event, link)) {
     await recordLinkOwner(event, link.slug)
+    await recordAudit(event, 'link.create', link.slug, { after: auditLink(link) })
     return { ...buildLinkResponse(event, link), status: 'created' }
   }
 
@@ -138,6 +140,7 @@ export async function replaceLink(event: H3Event, link: EditLink): Promise<LinkR
   if (!await updateLink(event, newLink, { id: existingLink.id, updatedAt: existingLink.updatedAt }))
     throw createError({ status: 409, statusText: 'Link was modified or replaced' })
 
+  await recordAudit(event, 'link.edit', newLink.slug, { before: auditLink(existingLink), after: auditLink(newLink) })
   return buildLinkResponse(event, newLink)
 }
 
@@ -145,6 +148,9 @@ export async function removeLink(event: H3Event, slug: string): Promise<void> {
   assertLinkWritesAllowed(event, 'delete')
   const normalizedSlug = normalizeSlug(event, slug)
   await assertCanDeleteLink(event, normalizedSlug)
+  const existingLink = await getAnyAuthoritativeLink(event, normalizedSlug)
   await deleteLink(event, normalizedSlug)
   await forgetLinkOwner(event, normalizedSlug)
+  if (existingLink)
+    await recordAudit(event, 'link.delete', normalizedSlug, { before: auditLink(existingLink) })
 }

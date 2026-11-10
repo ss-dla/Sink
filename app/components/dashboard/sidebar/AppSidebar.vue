@@ -46,6 +46,18 @@ const settingsItems = computed<NavItem[]>(() => userRole.value !== 'admin'
         icon: DASHBOARD_ROUTES.migrate.icon,
         isActive: isActive('migrate'),
       },
+      {
+        title: 'nav.users',
+        url: '/dashboard/users',
+        icon: DASHBOARD_ROUTES.users.icon,
+        isActive: isActive('users'),
+      },
+      {
+        title: 'nav.audit',
+        url: '/dashboard/audit',
+        icon: DASHBOARD_ROUTES.audit.icon,
+        isActive: isActive('audit'),
+      },
     ])
 </script>
 

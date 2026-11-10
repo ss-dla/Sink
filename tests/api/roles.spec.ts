@@ -62,6 +62,10 @@ describe('admin-only endpoints', () => {
     ['POST', '/api/backup'],
     ['POST', '/api/link/migration/run', {}],
     ['POST', '/api/mcp', { jsonrpc: '2.0', id: 1, method: 'ping' }],
+    ['GET', '/api/users'],
+    ['POST', '/api/users', { email: 'x@datalabs.id' }],
+    ['PATCH', '/api/users', { email: 'bob@datalabs.id', role: 'admin' }],
+    ['GET', '/api/audit'],
   ]
 
   it.each(endpoints)('rejects an editor on %s %s', async (method, path, body) => {
