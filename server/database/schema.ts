@@ -74,3 +74,9 @@ export const users = sqliteTable('users', {
   createdAt: integer('created_at').notNull(),
   createdBy: text('created_by').notNull(),
 })
+
+export const linkOwners = sqliteTable('link_owners', {
+  slug: text().primaryKey(),
+  owner: text().notNull(),
+  createdAt: integer('created_at').notNull(),
+})

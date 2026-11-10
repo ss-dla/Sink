@@ -96,6 +96,7 @@ export async function saveNewLink(event: H3Event, link: Link): Promise<LinkRespo
   if (!await createLink(event, link))
     throw createError({ status: 409, statusText: 'Link already exists' })
 
+  await recordLinkOwner(event, link.slug)
   return buildLinkResponse(event, link)
 }
 
@@ -107,8 +108,10 @@ export async function upsertLink(event: H3Event, link: Link): Promise<LinkRespon
     return { ...buildLinkResponse(event, existingLink), status: 'existing' }
 
   await hashNewLinkPassword(link)
-  if (await createLink(event, link))
+  if (await createLink(event, link)) {
+    await recordLinkOwner(event, link.slug)
     return { ...buildLinkResponse(event, link), status: 'created' }
+  }
 
   // Another writer claimed the slug between the lookup and the insert.
   const racedLink = await getAuthoritativeLink(event, link.slug)
@@ -140,5 +143,8 @@ export async function replaceLink(event: H3Event, link: EditLink): Promise<LinkR
 
 export async function removeLink(event: H3Event, slug: string): Promise<void> {
   assertLinkWritesAllowed(event, 'delete')
-  await deleteLink(event, normalizeSlug(event, slug))
+  const normalizedSlug = normalizeSlug(event, slug)
+  await assertCanDeleteLink(event, normalizedSlug)
+  await deleteLink(event, normalizedSlug)
+  await forgetLinkOwner(event, normalizedSlug)
 }

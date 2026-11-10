@@ -1,8 +1,7 @@
+import type { UserRole } from '../../shared/types/auth'
 import { eq } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/d1'
 import { users } from '../database/schema'
-
-export type UserRole = 'admin' | 'editor'
 
 export interface SinkUser {
   email: string

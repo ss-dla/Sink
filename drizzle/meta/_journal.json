@@ -50,6 +50,13 @@
       "when": 1794277833452,
       "tag": "0006_wise_cobalt_man",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1794278220756,
+      "tag": "0007_demonic_unicorn",
+      "breakpoints": true
     }
   ]
 }

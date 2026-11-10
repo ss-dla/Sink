@@ -41,6 +41,8 @@ export default eventHandler(async (event) => {
       Object.assign(
         event.context,
         mapCloudflareAccessIdentity(accessIdentity, getRequestURL(event).hostname),
+        // The Access policy is the gate for these users, so they keep full access.
+        { userRole: 'admin' },
       )
       return
     }
