@@ -38,6 +38,10 @@ export default defineConfig(async ({ mode }) => ({
         r2Buckets: ['R2'],
         bindings: {
           TEST_MIGRATIONS: await readD1Migrations('./drizzle'),
+          NUXT_GOOGLE_CLIENT_ID: 'test-client-id.apps.googleusercontent.com',
+          NUXT_GOOGLE_CLIENT_SECRET: 'test-client-secret',
+          NUXT_SESSION_SECRET: 'test-session-secret-for-vitest',
+          NUXT_BOOTSTRAP_ADMINS: 'boot@datalabs.id',
         },
       },
     }),

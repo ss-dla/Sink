@@ -66,3 +66,11 @@ export const linkMigrationRuns = sqliteTable('link_migration_runs', {
     sql`${table.id} desc`,
   ),
 ])
+
+export const users = sqliteTable('users', {
+  email: text().primaryKey(),
+  role: text({ enum: ['admin', 'editor'] }).notNull().default('editor'),
+  disabled: integer({ mode: 'boolean' }).notNull().default(false),
+  createdAt: integer('created_at').notNull(),
+  createdBy: text('created_by').notNull(),
+})
