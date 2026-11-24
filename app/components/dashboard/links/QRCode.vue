@@ -6,7 +6,7 @@ const props = withDefaults(defineProps<{
   data: string
   image?: string
 }>(), {
-  image: '',
+  image: '/qr-logo.png',
 })
 const color = ref('#000000')
 const options = {

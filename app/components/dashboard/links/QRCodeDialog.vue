@@ -3,7 +3,7 @@ withDefaults(defineProps<{
   data: string
   image?: string
 }>(), {
-  image: '',
+  image: '/qr-logo.png',
 })
 
 const emit = defineEmits<{
